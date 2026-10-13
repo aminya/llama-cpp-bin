@@ -1,0 +1,213 @@
+pkgbase=@CORE_PKGNAME@
+pkgname=(
+  '@CORE_PKGNAME@'
+@BACKEND_PKGNAMES@)
+pkgver=@PKGVER@
+pkgrel=@PKGREL@
+pkgdesc='Official llama.cpp @CHANNEL_LABEL@ CPU core and commands'
+arch=('x86_64')
+url='https://github.com/ggml-org/llama.cpp'
+license=('MIT')
+options=('!strip')
+provides=('llama.cpp')
+conflicts=(
+  'llama.cpp'
+  'llama.cpp-bin'
+  'llama.cpp-cuda'
+  'llama.cpp-cuda-bin'
+  'llama.cpp-cuda13-bin'
+  'llama.cpp-hip'
+  'llama.cpp-sycl-f32'
+  'llama.cpp-vulkan'
+  'llama.cpp-vulkan-bin'
+  'llama-cpp'
+@CHANNEL_CONFLICTS@)
+depends=('curl' 'gcc-libs' 'glibc' 'openssl')
+optdepends=(
+@CORE_OPTDEPENDS@)
+
+_upstream_tag='@UPSTREAM_TAG@'
+_core_archive='@CORE_LOCAL@'
+_backend_variants=(
+@BACKEND_VARIANTS@)
+
+source=(
+  "${_core_archive}::@CORE_URL@"
+@BACKEND_SOURCES@)
+sha256sums=(
+  '@CORE_SHA@'
+@BACKEND_CHECKSUMS@)
+noextract=(
+  "${_core_archive}"
+@BACKEND_NOEXTRACT@)
+
+declare -gA _backend_archive=(
+@BACKEND_ARCHIVE_MAP@)
+declare -gA _backend_plugin=(
+@BACKEND_PLUGIN_MAP@)
+declare -gA _cudart_archive=(
+@CUDART_ARCHIVE_MAP@)
+declare -gA _cudart_root=(
+@CUDART_ROOT_MAP@)
+
+prepare() {
+  [[ -n "${_core_archive:-}" && -f "${srcdir}/${_core_archive}" ]] || {
+    printf 'CPU source archive mapping is empty or missing: %s\n' \
+      "${srcdir}/${_core_archive:-}" >&2
+    return 1
+  }
+  install -dm755 "${srcdir}/upstream/core"
+  tar -xzf "${srcdir}/${_core_archive}" -C "${srcdir}/upstream/core"
+
+  local variant
+  for variant in "${_backend_variants[@]}"; do
+    local archive="${_backend_archive[${variant}]:-}"
+    [[ -n "${archive}" && -f "${srcdir}/${archive}" ]] || {
+      printf 'Backend source archive mapping is empty or missing for %s: %s\n' \
+        "${variant}" "${srcdir}/${archive}" >&2
+      return 1
+    }
+    install -dm755 "${srcdir}/upstream/backend/${variant}"
+    tar -xzf "${srcdir}/${archive}" \
+      -C "${srcdir}/upstream/backend/${variant}"
+    if [[ "${variant}" == cuda12 || "${variant}" == cuda13 ]]; then
+      local cudart_archive="${_cudart_archive[${variant}]:-}"
+      [[ -n "${cudart_archive}" && -f "${srcdir}/${cudart_archive}" ]] || {
+        printf 'CUDA runtime source archive mapping is empty or missing for %s: %s\n' \
+          "${variant}" "${srcdir}/${cudart_archive}" >&2
+        return 1
+      }
+      install -dm755 "${srcdir}/upstream/cudart/${variant}"
+      tar -xzf "${srcdir}/${cudart_archive}" \
+        -C "${srcdir}/upstream/cudart/${variant}"
+    fi
+  done
+}
+
+_package_core() {
+  local source_root="${srcdir}/upstream/core/llama-${_upstream_tag}"
+  local appdir="${pkgdir}/usr/lib/llama.cpp"
+  local executable_count=0
+
+  [[ -d "${source_root}" ]] || {
+    printf 'Expected upstream CPU archive directory is missing: %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -dm755 "${appdir}" "${pkgdir}/usr/bin" \
+    "${pkgdir}/usr/share/licenses/${pkgname}"
+
+  shopt -s nullglob
+  local file
+  for file in "${source_root}"/*; do
+    [[ -f "${file}" || -L "${file}" ]] || continue
+    if [[ "${file##*/}" == *.so* ]]; then
+      cp -P -- "${file}" "${appdir}/"
+      continue
+    fi
+    [[ -x "${file}" ]] || continue
+    cp -P -- "${file}" "${appdir}/"
+    ln -s "/usr/lib/llama.cpp/${file##*/}" \
+      "${pkgdir}/usr/bin/${file##*/}"
+    ((executable_count += 1))
+  done
+
+  (( executable_count > 0 )) || {
+    printf 'No executable files were found in %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -Dm644 "${source_root}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+_package_backend() {
+  local variant="$1"
+  local source_root="${srcdir}/upstream/backend/${variant}/llama-${_upstream_tag}"
+  local appdir="${pkgdir}/usr/lib/llama.cpp"
+  local plugin="${_backend_plugin[${variant}]}"
+  local plugin_count=0
+
+  [[ -d "${source_root}" ]] || {
+    printf 'Expected upstream backend archive directory is missing: %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -dm755 "${appdir}" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 "${source_root}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+  shopt -s nullglob
+  local file
+  for file in "${source_root}"/libggml-"${plugin}"*.so*; do
+    [[ -f "${file}" || -L "${file}" ]] || continue
+    cp -P -- "${file}" "${appdir}/"
+    ((plugin_count += 1))
+  done
+
+  (( plugin_count > 0 )) || {
+    printf 'No libggml-%s backend libraries were found in %s\n' \
+      "${plugin}" "${source_root}" >&2
+    return 1
+  }
+
+  if [[ -n "${_cudart_archive[${variant}]:-}" ]]; then
+    local runtime_root="${srcdir}/upstream/cudart/${variant}/${_cudart_root[${variant}]}"
+    local runtime_count=0
+    for file in "${runtime_root}"/*.so*; do
+      [[ -f "${file}" || -L "${file}" ]] || continue
+      cp -P -- "${file}" "${appdir}/"
+      ((runtime_count += 1))
+    done
+    (( runtime_count > 0 )) || {
+      printf 'No CUDA runtime libraries were found in %s\n' "${runtime_root}" >&2
+      return 1
+    }
+  fi
+
+  if [[ "${variant}" == openvino ]]; then
+    local runtime_count=0
+    for file in "${source_root}"/libopenvino.so* "${source_root}"/libopenvino_c.so* \
+      "${source_root}"/libopenvino_*_plugin.so \
+      "${source_root}"/libopenvino_intel_npu_compiler*.so \
+      "${source_root}"/libtbb*.so* "${source_root}"/libOpenCL.so.1*; do
+      [[ -f "${file}" || -L "${file}" ]] || continue
+      cp -P -- "${file}" "${appdir}/"
+      ((runtime_count += 1))
+    done
+    (( runtime_count > 0 )) || {
+      printf 'No bundled OpenVINO runtime libraries were found in %s\n' "${source_root}" >&2
+      return 1
+    }
+    if [[ -f "${source_root}/cache.json" ]]; then
+      install -Dm644 "${source_root}/cache.json" "${appdir}/cache.json"
+    fi
+    for file in "${source_root}"/*-licensing; do
+      [[ -d "${file}" ]] || continue
+      cp -a -- "${file}" "${pkgdir}/usr/share/licenses/${pkgname}/"
+    done
+  fi
+}
+
+package_@CORE_PKGNAME@() {
+  pkgdesc='Official llama.cpp @CHANNEL_LABEL@ CPU core and commands'
+  depends=('curl' 'gcc-libs' 'glibc' 'openssl')
+  provides=('llama.cpp')
+  conflicts=(
+    'llama.cpp'
+    'llama.cpp-bin'
+    'llama.cpp-cuda'
+    'llama.cpp-cuda-bin'
+    'llama.cpp-cuda13-bin'
+    'llama.cpp-hip'
+    'llama.cpp-sycl-f32'
+    'llama.cpp-vulkan'
+    'llama.cpp-vulkan-bin'
+    'llama-cpp'
+@CHANNEL_CONFLICTS@)
+  optdepends=(
+@CORE_OPTDEPENDS@)
+  _package_core
+}
+
+@BACKEND_PACKAGE_FUNCTIONS@

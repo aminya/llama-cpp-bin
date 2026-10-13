@@ -1,0 +1,40 @@
+name: Update upstream binaries
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: upstream-package-update
+  cancel-in-progress: false
+
+jobs:
+  update-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Poll upstream and refresh package metadata
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          ./scripts/update-packages.sh
+          ./scripts/generate-srcinfo.sh
+
+      - name: Open update pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/upstream-binaries
+          delete-branch: true
+          commit-message: "chore: update upstream llama.cpp binaries"
+          title: "chore: update upstream llama.cpp binaries"
+          body: |
+            Update package metadata from the latest official llama.cpp stable and prerelease assets.
+
+            This PR updates PKGBUILDs, SHA256 checksums, and `.SRCINFO`. It does not build packages.

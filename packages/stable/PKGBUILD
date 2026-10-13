@@ -1,0 +1,426 @@
+pkgbase=llama-cpp-bin
+pkgname=(
+  'llama-cpp-bin'
+  'llama-cpp-vulkan-bin'
+  'llama-cpp-cuda12-bin'
+  'llama-cpp-cuda13-bin'
+  'llama-cpp-rocm-bin'
+  'llama-cpp-openvino-bin'
+  'llama-cpp-sycl-fp16-bin'
+  'llama-cpp-sycl-fp32-bin'
+)
+pkgver=0.6.0
+pkgrel=1
+pkgdesc='Official llama.cpp stable CPU core and commands'
+arch=('x86_64')
+url='https://github.com/ggml-org/llama.cpp'
+license=('MIT')
+options=('!strip')
+provides=('llama.cpp')
+conflicts=(
+  'llama.cpp'
+  'llama.cpp-bin'
+  'llama.cpp-cuda'
+  'llama.cpp-cuda-bin'
+  'llama.cpp-cuda13-bin'
+  'llama.cpp-hip'
+  'llama.cpp-sycl-f32'
+  'llama.cpp-vulkan'
+  'llama.cpp-vulkan-bin'
+  'llama-cpp'
+  'llama-cpp-prerelease-bin'
+)
+depends=('curl' 'gcc-libs' 'glibc' 'openssl')
+optdepends=(
+  'llama-cpp-vulkan-bin: Vulkan acceleration backend'
+  'llama-cpp-cuda12-bin: CUDA 12 acceleration backend'
+  'llama-cpp-cuda13-bin: CUDA 13 acceleration backend'
+  'llama-cpp-rocm-bin: ROCm acceleration backend'
+  'llama-cpp-openvino-bin: OpenVINO acceleration backend'
+  'llama-cpp-sycl-fp16-bin: SYCL FP16 acceleration backend'
+  'llama-cpp-sycl-fp32-bin: SYCL FP32 acceleration backend'
+)
+
+_upstream_tag='b11429'
+_core_archive='core-llama-b11429-bin-ubuntu-x64.tar.gz'
+_backend_variants=(
+  'vulkan'
+  'cuda12'
+  'cuda13'
+  'rocm'
+  'openvino'
+  'sycl-fp16'
+  'sycl-fp32'
+)
+
+source=(
+  "${_core_archive}::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-x64.tar.gz"
+  'backend-vulkan-llama-b11429-bin-ubuntu-vulkan-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-vulkan-x64.tar.gz'
+  'backend-cuda12-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'cudart-cuda12-cudart-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/cudart-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'backend-cuda13-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'cudart-cuda13-cudart-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/cudart-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'backend-rocm-llama-b11429-bin-ubuntu-rocm-10.0-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  'backend-openvino-llama-b11429-bin-ubuntu-openvino-2026.4.1-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  'backend-sycl-fp16-llama-b11429-bin-ubuntu-sycl-fp16-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  'backend-sycl-fp32-llama-b11429-bin-ubuntu-sycl-fp32-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11429/llama-b11429-bin-ubuntu-sycl-fp32-x64.tar.gz'
+)
+sha256sums=(
+  'f6d25dde8f51133143d1453da4fd5f73b145127177612a283bf7995957af3392'
+  '632c4e98feba2b94407a2130e3133e0c3aefb0ea1ab41337e926d8bfafdd0b74'
+  'b13c64b9224d3c89d9993945d70cc21177ad00178c21b8d34237e3bc139834f1'
+  'f4ab593e31507320b121f2cb21791f4c72420a2483d3df8bf2ca1a97d04e6845'
+  '8082b7eaa74a714c9fecca19128f751c8e32da763ee8096b8ad1e824da7621d3'
+  '93d18648d815b2bd624d83d82f653e1db97afb478f02064305fe3cf570040a6d'
+  'bd73e52146551f07a4c539bbe9da42f3b680c44ddc252fce61ab86d567a5932a'
+  '4319cb095b38218d00b44fc1effea95b2bb5a7e982fa1c2bfea3b5457e238284'
+  'dbbf6e0d767b3da3b4f13c7fa8bb49582cdd427b800e060d0958568c8c4fc973'
+  '5e6c382f8ae19d906a6aa0c806faa7184ed1cef872e60fff15373f3162416b08'
+)
+noextract=(
+  "${_core_archive}"
+  'backend-vulkan-llama-b11429-bin-ubuntu-vulkan-x64.tar.gz'
+  'backend-cuda12-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'cudart-cuda12-cudart-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'backend-cuda13-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'cudart-cuda13-cudart-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'backend-rocm-llama-b11429-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  'backend-openvino-llama-b11429-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  'backend-sycl-fp16-llama-b11429-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  'backend-sycl-fp32-llama-b11429-bin-ubuntu-sycl-fp32-x64.tar.gz'
+)
+
+declare -gA _backend_archive=(
+  [vulkan]='backend-vulkan-llama-b11429-bin-ubuntu-vulkan-x64.tar.gz'
+  [cuda12]='backend-cuda12-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  [cuda13]='backend-cuda13-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  [rocm]='backend-rocm-llama-b11429-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  [openvino]='backend-openvino-llama-b11429-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  [sycl-fp16]='backend-sycl-fp16-llama-b11429-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  [sycl-fp32]='backend-sycl-fp32-llama-b11429-bin-ubuntu-sycl-fp32-x64.tar.gz'
+)
+declare -gA _backend_plugin=(
+  [vulkan]='vulkan'
+  [cuda12]='cuda'
+  [cuda13]='cuda'
+  [rocm]='hip'
+  [openvino]='openvino'
+  [sycl-fp16]='sycl'
+  [sycl-fp32]='sycl'
+)
+declare -gA _cudart_archive=(
+  [cuda12]='cudart-cuda12-cudart-llama-b11429-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  [cuda13]='cudart-cuda13-cudart-llama-b11429-bin-ubuntu-cuda-13.4-x64.tar.gz'
+)
+declare -gA _cudart_root=(
+  [cuda12]='cudart-llama-b11429-bin-ubuntu-cuda-12.8-x64'
+  [cuda13]='cudart-llama-b11429-bin-ubuntu-cuda-13.4-x64'
+)
+
+prepare() {
+  [[ -n "${_core_archive:-}" && -f "${srcdir}/${_core_archive}" ]] || {
+    printf 'CPU source archive mapping is empty or missing: %s\n' \
+      "${srcdir}/${_core_archive:-}" >&2
+    return 1
+  }
+  install -dm755 "${srcdir}/upstream/core"
+  tar -xzf "${srcdir}/${_core_archive}" -C "${srcdir}/upstream/core"
+
+  local variant
+  for variant in "${_backend_variants[@]}"; do
+    local archive="${_backend_archive[${variant}]:-}"
+    [[ -n "${archive}" && -f "${srcdir}/${archive}" ]] || {
+      printf 'Backend source archive mapping is empty or missing for %s: %s\n' \
+        "${variant}" "${srcdir}/${archive}" >&2
+      return 1
+    }
+    install -dm755 "${srcdir}/upstream/backend/${variant}"
+    tar -xzf "${srcdir}/${archive}" \
+      -C "${srcdir}/upstream/backend/${variant}"
+    if [[ "${variant}" == cuda12 || "${variant}" == cuda13 ]]; then
+      local cudart_archive="${_cudart_archive[${variant}]:-}"
+      [[ -n "${cudart_archive}" && -f "${srcdir}/${cudart_archive}" ]] || {
+        printf 'CUDA runtime source archive mapping is empty or missing for %s: %s\n' \
+          "${variant}" "${srcdir}/${cudart_archive}" >&2
+        return 1
+      }
+      install -dm755 "${srcdir}/upstream/cudart/${variant}"
+      tar -xzf "${srcdir}/${cudart_archive}" \
+        -C "${srcdir}/upstream/cudart/${variant}"
+    fi
+  done
+}
+
+_package_core() {
+  local source_root="${srcdir}/upstream/core/llama-${_upstream_tag}"
+  local appdir="${pkgdir}/usr/lib/llama.cpp"
+  local executable_count=0
+
+  [[ -d "${source_root}" ]] || {
+    printf 'Expected upstream CPU archive directory is missing: %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -dm755 "${appdir}" "${pkgdir}/usr/bin" \
+    "${pkgdir}/usr/share/licenses/${pkgname}"
+
+  shopt -s nullglob
+  local file
+  for file in "${source_root}"/*; do
+    [[ -f "${file}" || -L "${file}" ]] || continue
+    if [[ "${file##*/}" == *.so* ]]; then
+      cp -P -- "${file}" "${appdir}/"
+      continue
+    fi
+    [[ -x "${file}" ]] || continue
+    cp -P -- "${file}" "${appdir}/"
+    ln -s "/usr/lib/llama.cpp/${file##*/}" \
+      "${pkgdir}/usr/bin/${file##*/}"
+    ((executable_count += 1))
+  done
+
+  (( executable_count > 0 )) || {
+    printf 'No executable files were found in %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -Dm644 "${source_root}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+}
+
+_package_backend() {
+  local variant="$1"
+  local source_root="${srcdir}/upstream/backend/${variant}/llama-${_upstream_tag}"
+  local appdir="${pkgdir}/usr/lib/llama.cpp"
+  local plugin="${_backend_plugin[${variant}]}"
+  local plugin_count=0
+
+  [[ -d "${source_root}" ]] || {
+    printf 'Expected upstream backend archive directory is missing: %s\n' "${source_root}" >&2
+    return 1
+  }
+
+  install -dm755 "${appdir}" "${pkgdir}/usr/share/licenses/${pkgname}"
+  install -Dm644 "${source_root}/LICENSE" \
+    "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
+  shopt -s nullglob
+  local file
+  for file in "${source_root}"/libggml-"${plugin}"*.so*; do
+    [[ -f "${file}" || -L "${file}" ]] || continue
+    cp -P -- "${file}" "${appdir}/"
+    ((plugin_count += 1))
+  done
+
+  (( plugin_count > 0 )) || {
+    printf 'No libggml-%s backend libraries were found in %s\n' \
+      "${plugin}" "${source_root}" >&2
+    return 1
+  }
+
+  if [[ -n "${_cudart_archive[${variant}]:-}" ]]; then
+    local runtime_root="${srcdir}/upstream/cudart/${variant}/${_cudart_root[${variant}]}"
+    local runtime_count=0
+    for file in "${runtime_root}"/*.so*; do
+      [[ -f "${file}" || -L "${file}" ]] || continue
+      cp -P -- "${file}" "${appdir}/"
+      ((runtime_count += 1))
+    done
+    (( runtime_count > 0 )) || {
+      printf 'No CUDA runtime libraries were found in %s\n' "${runtime_root}" >&2
+      return 1
+    }
+  fi
+
+  if [[ "${variant}" == openvino ]]; then
+    local runtime_count=0
+    for file in "${source_root}"/libopenvino.so* "${source_root}"/libopenvino_c.so* \
+      "${source_root}"/libopenvino_*_plugin.so \
+      "${source_root}"/libopenvino_intel_npu_compiler*.so \
+      "${source_root}"/libtbb*.so* "${source_root}"/libOpenCL.so.1*; do
+      [[ -f "${file}" || -L "${file}" ]] || continue
+      cp -P -- "${file}" "${appdir}/"
+      ((runtime_count += 1))
+    done
+    (( runtime_count > 0 )) || {
+      printf 'No bundled OpenVINO runtime libraries were found in %s\n' "${source_root}" >&2
+      return 1
+    }
+    if [[ -f "${source_root}/cache.json" ]]; then
+      install -Dm644 "${source_root}/cache.json" "${appdir}/cache.json"
+    fi
+    for file in "${source_root}"/*-licensing; do
+      [[ -d "${file}" ]] || continue
+      cp -a -- "${file}" "${pkgdir}/usr/share/licenses/${pkgname}/"
+    done
+  fi
+}
+
+package_llama-cpp-bin() {
+  pkgdesc='Official llama.cpp stable CPU core and commands'
+  depends=('curl' 'gcc-libs' 'glibc' 'openssl')
+  provides=('llama.cpp')
+  conflicts=(
+    'llama.cpp'
+    'llama.cpp-bin'
+    'llama.cpp-cuda'
+    'llama.cpp-cuda-bin'
+    'llama.cpp-cuda13-bin'
+    'llama.cpp-hip'
+    'llama.cpp-sycl-f32'
+    'llama.cpp-vulkan'
+    'llama.cpp-vulkan-bin'
+    'llama-cpp'
+  'llama-cpp-prerelease-bin'
+)
+  optdepends=(
+  'llama-cpp-vulkan-bin: Vulkan acceleration backend'
+  'llama-cpp-cuda12-bin: CUDA 12 acceleration backend'
+  'llama-cpp-cuda13-bin: CUDA 13 acceleration backend'
+  'llama-cpp-rocm-bin: ROCm acceleration backend'
+  'llama-cpp-openvino-bin: OpenVINO acceleration backend'
+  'llama-cpp-sycl-fp16-bin: SYCL FP16 acceleration backend'
+  'llama-cpp-sycl-fp32-bin: SYCL FP32 acceleration backend'
+)
+  _package_core
+}
+
+package_llama-cpp-vulkan-bin() {
+  pkgdesc='Official llama.cpp stable Vulkan backend'
+  provides=('llama-cpp-vulkan')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'vulkan-driver'
+  )
+  optdepends=(
+  'vulkan-intel: Intel GPU acceleration'
+  'vulkan-radeon: AMD GPU acceleration'
+  )
+  conflicts=(
+  'llama-cpp-cuda12'
+  'llama-cpp-cuda13'
+  'llama-cpp-rocm'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp16'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'vulkan'
+}
+
+package_llama-cpp-cuda12-bin() {
+  pkgdesc='Official llama.cpp stable CUDA 12 backend'
+  provides=('llama-cpp-cuda12')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'nvidia-libgl'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda13'
+  'llama-cpp-rocm'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp16'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'cuda12'
+}
+
+package_llama-cpp-cuda13-bin() {
+  pkgdesc='Official llama.cpp stable CUDA 13 backend'
+  provides=('llama-cpp-cuda13')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'nvidia-libgl'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda12'
+  'llama-cpp-rocm'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp16'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'cuda13'
+}
+
+package_llama-cpp-rocm-bin() {
+  pkgdesc='Official llama.cpp stable ROCm backend'
+  provides=('llama-cpp-rocm')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'hip-runtime-amd'
+  'hipblas'
+  'rocblas'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda12'
+  'llama-cpp-cuda13'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp16'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'rocm'
+}
+
+package_llama-cpp-openvino-bin() {
+  pkgdesc='Official llama.cpp stable OpenVINO backend'
+  provides=('llama-cpp-openvino')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  )
+  optdepends=(
+  'intel-compute-runtime: Intel GPU acceleration'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda12'
+  'llama-cpp-cuda13'
+  'llama-cpp-rocm'
+  'llama-cpp-sycl-fp16'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'openvino'
+}
+
+package_llama-cpp-sycl-fp16-bin() {
+  pkgdesc='Official llama.cpp stable SYCL FP16 backend'
+  provides=('llama-cpp-sycl-fp16')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'intel-oneapi-compiler-dpcpp-cpp-runtime'
+  )
+  optdepends=(
+  'intel-compute-runtime: Intel GPU acceleration'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda12'
+  'llama-cpp-cuda13'
+  'llama-cpp-rocm'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp32'
+  )
+  _package_backend 'sycl-fp16'
+}
+
+package_llama-cpp-sycl-fp32-bin() {
+  pkgdesc='Official llama.cpp stable SYCL FP32 backend'
+  provides=('llama-cpp-sycl-fp32')
+  depends=(
+    "${pkgbase}=${pkgver}-${pkgrel}"
+  'intel-oneapi-compiler-dpcpp-cpp-runtime'
+  )
+  optdepends=(
+  'intel-compute-runtime: Intel GPU acceleration'
+  )
+  conflicts=(
+  'llama-cpp-vulkan'
+  'llama-cpp-cuda12'
+  'llama-cpp-cuda13'
+  'llama-cpp-rocm'
+  'llama-cpp-openvino'
+  'llama-cpp-sycl-fp16'
+  )
+  _package_backend 'sycl-fp32'
+}
