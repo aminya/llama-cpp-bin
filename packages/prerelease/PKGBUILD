@@ -9,7 +9,7 @@ pkgname=(
   'llama-cpp-sycl-fp16-prerelease-bin'
   'llama-cpp-sycl-fp32-prerelease-bin'
 )
-pkgver=b11612
+pkgver=b11617
 pkgrel=1
 pkgdesc='Official llama.cpp prerelease CPU core and commands'
 arch=('x86_64')
@@ -41,8 +41,8 @@ optdepends=(
   'llama-cpp-sycl-fp32-prerelease-bin: SYCL FP32 acceleration backend'
 )
 
-_upstream_tag='b11612'
-_core_archive='core-llama-b11612-bin-ubuntu-x64.tar.gz'
+_upstream_tag='b11617'
+_core_archive='core-llama-b11617-bin-ubuntu-x64.tar.gz'
 _backend_variants=(
   'vulkan'
   'cuda12'
@@ -54,50 +54,50 @@ _backend_variants=(
 )
 
 source=(
-  "${_core_archive}::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-x64.tar.gz"
-  'backend-vulkan-llama-b11612-bin-ubuntu-vulkan-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-vulkan-x64.tar.gz'
-  'backend-cuda12-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  'cudart-cuda12-cudart-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/cudart-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  'backend-cuda13-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
-  'cudart-cuda13-cudart-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/cudart-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
-  'backend-rocm-llama-b11612-bin-ubuntu-rocm-10.0-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-rocm-10.0-x64.tar.gz'
-  'backend-openvino-llama-b11612-bin-ubuntu-openvino-2026.4.1-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
-  'backend-sycl-fp16-llama-b11612-bin-ubuntu-sycl-fp16-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-sycl-fp16-x64.tar.gz'
-  'backend-sycl-fp32-llama-b11612-bin-ubuntu-sycl-fp32-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11612/llama-b11612-bin-ubuntu-sycl-fp32-x64.tar.gz'
+  "${_core_archive}::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-x64.tar.gz"
+  'backend-vulkan-llama-b11617-bin-ubuntu-vulkan-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-vulkan-x64.tar.gz'
+  'backend-cuda12-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'cudart-cuda12-cudart-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/cudart-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'backend-cuda13-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'cudart-cuda13-cudart-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/cudart-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'backend-rocm-llama-b11617-bin-ubuntu-rocm-10.0-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  'backend-openvino-llama-b11617-bin-ubuntu-openvino-2026.4.1-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  'backend-sycl-fp16-llama-b11617-bin-ubuntu-sycl-fp16-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  'backend-sycl-fp32-llama-b11617-bin-ubuntu-sycl-fp32-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b11617/llama-b11617-bin-ubuntu-sycl-fp32-x64.tar.gz'
 )
 sha256sums=(
-  '06fbaabe471aab27727882cd8f1b5c231d2eaa346fce1a3171041e2868f08c2a'
-  '9612af58b630aa53817cdd9d26b19ebddd5f811a0012e3c3c0a8db46e7e5e06d'
-  '119f1c227843e5daab2f229e03a67af5283ddcb82b08715afaab5cb675563038'
-  'b1d064080b0b639de53c3725c229944bd35596a6c798944913532952d6a85de1'
-  '2babeeee7ec26f8e27087b23f3fc89cc948de6304925f6da30d050606e01fe87'
-  '3ec0a4a92128072a56a112c003773b3d4db8b2bb87eca3cb21f8187f022a514c'
-  'f1c72f78ca597cc6d3d256d2c07bd4f09fc2121027b64f5fd713122a55b78139'
-  '4819b89b15c5431dd3205cb5902f1c7941d7ee4b756d2960fef8314ea9faa583'
-  '26586743539a7f01b3ffafbcea6f750bd36a3e22923ea785fb245b56bfbc411e'
-  'd7b0cbb42cb0f0fefd2e836271af489b7f43c5abce0e158e70d3c110418e4fdc'
+  'bc9c8bd3488e5778137c2289d951af60a94077a6bea51b7e30461033b084e07f'
+  '9a41faa40d58bcabf6447df29df122bd63346baa5ca078a8f371f6c9b14232ce'
+  '1c5024dfa587a3f23ef8fc066cb2578fb43d661910d4111a8941184773c237d1'
+  '59e7bf466cf7d307c2ef9654fc4a5ba5428a4dd1e63b60fbe1b8d8591550f54f'
+  '2a12f7340cdc40e6e0bf054390c8fd6dd40292e03c38817f4ce95c5eb4b88c7f'
+  '41829774bc4ee3e7847ff09764ff38b76b525406d3321bfe22f27bf7e693e674'
+  '60ad5c4cd278497a263f1856eaece2c3f70f79d00b9d0ae31b6245ab25ec7c29'
+  'abcf37b2889c8f37b172e49ee5c0cbf378c7c9b5bd41c9c39e895f23daa35555'
+  '1511c636c6704c2014047bada99b32e3c9934857ddffdd3de411d653c8485c74'
+  '3967c1a993d7e4e1bcb3649194e1bdb986f1a1aae7391cb16c6c63a717ae51de'
 )
 noextract=(
   "${_core_archive}"
-  'backend-vulkan-llama-b11612-bin-ubuntu-vulkan-x64.tar.gz'
-  'backend-cuda12-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  'cudart-cuda12-cudart-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  'backend-cuda13-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
-  'cudart-cuda13-cudart-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
-  'backend-rocm-llama-b11612-bin-ubuntu-rocm-10.0-x64.tar.gz'
-  'backend-openvino-llama-b11612-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
-  'backend-sycl-fp16-llama-b11612-bin-ubuntu-sycl-fp16-x64.tar.gz'
-  'backend-sycl-fp32-llama-b11612-bin-ubuntu-sycl-fp32-x64.tar.gz'
+  'backend-vulkan-llama-b11617-bin-ubuntu-vulkan-x64.tar.gz'
+  'backend-cuda12-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'cudart-cuda12-cudart-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  'backend-cuda13-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'cudart-cuda13-cudart-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  'backend-rocm-llama-b11617-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  'backend-openvino-llama-b11617-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  'backend-sycl-fp16-llama-b11617-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  'backend-sycl-fp32-llama-b11617-bin-ubuntu-sycl-fp32-x64.tar.gz'
 )
 
 declare -gA _backend_archive=(
-  [vulkan]='backend-vulkan-llama-b11612-bin-ubuntu-vulkan-x64.tar.gz'
-  [cuda12]='backend-cuda12-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  [cuda13]='backend-cuda13-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
-  [rocm]='backend-rocm-llama-b11612-bin-ubuntu-rocm-10.0-x64.tar.gz'
-  [openvino]='backend-openvino-llama-b11612-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
-  [sycl-fp16]='backend-sycl-fp16-llama-b11612-bin-ubuntu-sycl-fp16-x64.tar.gz'
-  [sycl-fp32]='backend-sycl-fp32-llama-b11612-bin-ubuntu-sycl-fp32-x64.tar.gz'
+  [vulkan]='backend-vulkan-llama-b11617-bin-ubuntu-vulkan-x64.tar.gz'
+  [cuda12]='backend-cuda12-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  [cuda13]='backend-cuda13-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  [rocm]='backend-rocm-llama-b11617-bin-ubuntu-rocm-10.0-x64.tar.gz'
+  [openvino]='backend-openvino-llama-b11617-bin-ubuntu-openvino-2026.4.1-x64.tar.gz'
+  [sycl-fp16]='backend-sycl-fp16-llama-b11617-bin-ubuntu-sycl-fp16-x64.tar.gz'
+  [sycl-fp32]='backend-sycl-fp32-llama-b11617-bin-ubuntu-sycl-fp32-x64.tar.gz'
 )
 declare -gA _backend_plugin=(
   [vulkan]='vulkan'
@@ -109,12 +109,12 @@ declare -gA _backend_plugin=(
   [sycl-fp32]='sycl'
 )
 declare -gA _cudart_archive=(
-  [cuda12]='cudart-cuda12-cudart-llama-b11612-bin-ubuntu-cuda-12.8-x64.tar.gz'
-  [cuda13]='cudart-cuda13-cudart-llama-b11612-bin-ubuntu-cuda-13.4-x64.tar.gz'
+  [cuda12]='cudart-cuda12-cudart-llama-b11617-bin-ubuntu-cuda-12.8-x64.tar.gz'
+  [cuda13]='cudart-cuda13-cudart-llama-b11617-bin-ubuntu-cuda-13.4-x64.tar.gz'
 )
 declare -gA _cudart_root=(
-  [cuda12]='cudart-llama-b11612-bin-ubuntu-cuda-12.8-x64'
-  [cuda13]='cudart-llama-b11612-bin-ubuntu-cuda-13.4-x64'
+  [cuda12]='cudart-llama-b11617-bin-ubuntu-cuda-12.8-x64'
+  [cuda13]='cudart-llama-b11617-bin-ubuntu-cuda-13.4-x64'
 )
 
 prepare() {
