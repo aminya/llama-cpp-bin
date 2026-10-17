@@ -16,6 +16,9 @@ concurrency:
 jobs:
   update-metadata:
     runs-on: ubuntu-latest
+    outputs:
+      pull-request-number: ${{ steps.pull-request.outputs.pull-request-number }}
+      pull-request-head-sha: ${{ steps.pull-request.outputs.pull-request-head-sha }}
     steps:
       - uses: actions/checkout@v7
 
@@ -27,6 +30,7 @@ jobs:
           ./scripts/generate-srcinfo.sh
 
       - name: Open update pull request
+        id: pull-request
         uses: peter-evans/create-pull-request@v8.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -37,4 +41,72 @@ jobs:
           body: |
             Update package metadata from the latest official llama.cpp stable and prerelease assets.
 
-            This PR updates PKGBUILDs, SHA256 checksums, and `.SRCINFO`. It does not build packages.
+            This PR updates PKGBUILDs, SHA256 checksums, and `.SRCINFO`.
+            Both package channels are built before this PR is automatically merged.
+
+  build-packages:
+    needs: update-metadata
+    if: >-
+      needs.update-metadata.outputs.pull-request-number != '' &&
+      needs.update-metadata.outputs.pull-request-head-sha != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        channel: [stable, prerelease]
+    container:
+      image: archlinux:base-devel
+    steps:
+      - name: Prepare package builder
+        run: |
+          pacman -Syu --noconfirm --needed git ca-certificates
+          useradd --create-home package-builder
+
+      - name: Check out the update PR commit
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.update-metadata.outputs.pull-request-head-sha }}
+          persist-credentials: false
+
+      - name: Build all split packages
+        env:
+          PACKAGE_CHANNEL: ${{ matrix.channel }}
+        run: |
+          chown -R package-builder:package-builder "$GITHUB_WORKSPACE"
+          cd "packages/$PACKAGE_CHANNEL"
+          # Backend runtime dependencies are needed at installation time; the
+          # package functions only extract and copy the official binary archives.
+          # Keep source checksum verification enabled and build every subpackage.
+          su package-builder -c 'makepkg --nodeps --noconfirm --cleanbuild'
+
+  merge-update:
+    needs: [update-metadata, build-packages]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge the successfully built update commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ needs.update-metadata.outputs.pull-request-number }}
+          BUILT_SHA: ${{ needs.update-metadata.outputs.pull-request-head-sha }}
+        run: |
+          set -euo pipefail
+          pr=$(gh api "repos/$GH_REPO/pulls/$PR_NUMBER" \
+            --jq '[.state, .draft, .head.ref, .head.repo.full_name, .head.sha] | @tsv')
+          IFS=$'\t' read -r state draft branch repository head_sha <<< "$pr"
+          if [[ "$state" != open || "$draft" != false ||
+                "$branch" != automation/upstream-binaries ||
+                "$repository" != "$GH_REPO" || "$head_sha" != "$BUILT_SHA" ]]; then
+            echo 'Update PR is no longer eligible for merging at the built commit.' >&2
+            exit 1
+          fi
+          # The API checks the SHA atomically, including changes after the read.
+          merged=$(gh api --method PUT "repos/$GH_REPO/pulls/$PR_NUMBER/merge" \
+            -f sha="$BUILT_SHA" -f merge_method=squash --jq '.merged')
+          [[ "$merged" == true ]]

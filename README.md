@@ -4,28 +4,7 @@ This repository packages the official Linux x86_64 binary archives from
 [ggml-org/llama.cpp](https://github.com/ggml-org/llama.cpp). It repackages upstream files and does not
 compile llama.cpp. This is a personal package source repository, not an AUR package.
 
-## Package layout
 
-Each channel has one split PKGBUILD. Its CPU core package owns the standard `/usr/bin/llama-*`
-commands and common CPU libraries in `/usr/lib/llama.cpp/`. Backend subpackages add their libraries
-in that directory and depend on the matching core version. Backend packages conflict with other
-backend providers. Stable and prerelease cores also conflict, so only one channel and one accelerator
-backend can be active at a time.
-
-Stable package names use `llama-cpp-<variant>-bin`; prerelease backend names use
-`llama-cpp-<variant>-prerelease-bin`. The CPU core package names are `llama-cpp-bin` and
-`llama-cpp-prerelease-bin`. Supported backends are Vulkan, CUDA 12, CUDA 13, ROCm, OpenVINO, SYCL
-FP16, and SYCL FP32. CUDA backends also package upstream's separate CUDA runtime archive, including
-`libcudart`, `libcublas`, and `libcublasLt`. The OpenVINO package includes upstream's licensing
-directory when present.
-
-The stable `v0.6.0` release does not contain Linux x86_64 binary archives. It publishes a
-`nightly-tag.txt` pointer to `b11429`, whose release contains the complete Linux x86_64 binary set.
-The updater prefers a release's own CPU archive when available; otherwise, it resolves this pointer
-to source binaries for the stable package channel. It keeps `pkgver=0.6.0` and stable package names
-while extracting binaries from the `b11429` archives. If the pointer changes without a stable version
-change, it increments `pkgrel`. The prerelease channel independently uses the latest release whose
-GitHub metadata has `prerelease: true`.
 
 ## Build and install
 
@@ -62,14 +41,47 @@ For another backend, use its package name from the table. CPU-only installs need
 package. Split packaging follows the Ollama PKGBUILD convention: `makepkg` fetches the channel's
 complete source list while producing its subpackages.
 
+## Package layout
+
+Each channel has one split PKGBUILD. Its CPU core package owns the standard `/usr/bin/llama-*`
+commands and common CPU libraries in `/usr/lib/llama.cpp/`. Backend subpackages add their libraries
+in that directory and depend on the matching core version. Backend packages conflict with other
+backend providers. Stable and prerelease cores also conflict, so only one channel and one accelerator
+backend can be active at a time.
+
+Stable package names use `llama-cpp-<variant>-bin`; prerelease backend names use
+`llama-cpp-<variant>-prerelease-bin`. The CPU core package names are `llama-cpp-bin` and
+`llama-cpp-prerelease-bin`. Supported backends are Vulkan, CUDA 12, CUDA 13, ROCm, OpenVINO, SYCL
+FP16, and SYCL FP32. CUDA backends also package upstream's separate CUDA runtime archive, including
+`libcudart`, `libcublas`, and `libcublasLt`. The OpenVINO package includes upstream's licensing
+directory when present.
+
+The stable releases do not contain Linux x86_64 binary archives. They publish a
+`nightly-tag.txt` pointer to some nightly build like `b11429`, whose release contains the complete Linux x86_64 binary set.
+The updater prefers a release's own CPU archive when available; otherwise, it resolves this pointer
+to source binaries for the stable package channel. It keeps `pkgver=0.6.0` and stable package names
+while extracting binaries from the `b11429` archives. If the pointer changes without a stable version
+change, it increments `pkgrel`. The prerelease channel independently uses the latest release whose
+GitHub metadata has `prerelease: true`.
+
 ## Update metadata
 
 The GitHub Actions workflow polls upstream every six hours and supports manual dispatch. It resolves
 the stable release's `nightly-tag.txt` pointer and checks the prerelease channel independently,
 refreshes PKGBUILD versions, official source URLs, SHA256 checksums, and `.SRCINFO`, then opens a pull
-request. It does not retain package archives or build/test packages. A channel update is staged only
-when its CPU core, all previously published backend assets, and each CUDA runtime asset are available;
+request. A channel update is staged only when its CPU core, all previously published backend assets,
+and each CUDA runtime asset are available;
 a partial upstream upload leaves the prior channel metadata in place.
+
+The workflow then builds both stable and prerelease split packages from the exact update PR commit in
+Arch Linux containers. Builds verify source checksums and run all package functions with `makepkg` as
+an unprivileged user. They skip installation of backend runtime dependencies; this checks packaging,
+not accelerator execution. Package archives are not retained or published.
+
+After both builds succeed, the workflow squash-merges the `automation/upstream-binaries` PR only if
+its head still matches the built commit. A changed head or failed build leaves the PR open for the
+next update run. Repository branch protections still apply; GitHub Actions needs permission to create
+PRs and merge them. This flow uses a direct merge and does not require GitHub's auto-merge setting.
 
 Run the metadata updater locally with:
 
