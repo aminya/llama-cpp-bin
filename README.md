@@ -33,7 +33,7 @@ Stable CUDA 13 example, once upstream publishes the required stable binaries:
 
 ```sh
 cd packages/stable  
-makepkg # builds all prerelease variants
+makepkg # builds all stable variants
 sudo pacman -U llama-cpp-bin-*.pkg.tar.zst llama-cpp-cuda13-bin-*.pkg.tar.zst
 ```
 
