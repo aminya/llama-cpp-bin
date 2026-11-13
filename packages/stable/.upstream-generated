@@ -1,6 +1,6 @@
 channel=stable
-package_tag=v0.9.0
-asset_tag=b12110
-pkgver=0.9.0
+package_tag=v1.0.0
+asset_tag=b12359
+pkgver=1.0.0
 pkgrel=1
 variants=vulkan,cuda12,cuda13,rocm,openvino,sycl-fp16,sycl-fp32
