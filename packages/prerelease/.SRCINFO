@@ -1,6 +1,6 @@
 pkgbase = llama-cpp-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease CPU core and commands
-	pkgver = b12413
+	pkgver = b12426
 	pkgrel = 1
 	url = https://github.com/ggml-org/llama.cpp
 	arch = x86_64
@@ -28,37 +28,37 @@ pkgbase = llama-cpp-prerelease-bin
 	conflicts = llama.cpp-vulkan-bin
 	conflicts = llama-cpp
 	conflicts = llama-cpp-bin
-	noextract = core-llama-b12413-bin-ubuntu-x64.tar.gz
-	noextract = backend-vulkan-llama-b12413-bin-ubuntu-vulkan-x64.tar.gz
-	noextract = backend-cuda12-llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz
-	noextract = cudart-cuda12-cudart-llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz
-	noextract = backend-cuda13-llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz
-	noextract = cudart-cuda13-cudart-llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz
-	noextract = backend-rocm-llama-b12413-bin-ubuntu-rocm-10.0-x64.tar.gz
-	noextract = backend-openvino-llama-b12413-bin-ubuntu-openvino-2026.4.1-x64.tar.gz
-	noextract = backend-sycl-fp16-llama-b12413-bin-ubuntu-sycl-fp16-x64.tar.gz
-	noextract = backend-sycl-fp32-llama-b12413-bin-ubuntu-sycl-fp32-x64.tar.gz
+	noextract = core-llama-b12426-bin-ubuntu-x64.tar.gz
+	noextract = backend-vulkan-llama-b12426-bin-ubuntu-vulkan-x64.tar.gz
+	noextract = backend-cuda12-llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz
+	noextract = cudart-cuda12-cudart-llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz
+	noextract = backend-cuda13-llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz
+	noextract = cudart-cuda13-cudart-llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz
+	noextract = backend-rocm-llama-b12426-bin-ubuntu-rocm-10.0-x64.tar.gz
+	noextract = backend-openvino-llama-b12426-bin-ubuntu-openvino-2026.4.1-x64.tar.gz
+	noextract = backend-sycl-fp16-llama-b12426-bin-ubuntu-sycl-fp16-x64.tar.gz
+	noextract = backend-sycl-fp32-llama-b12426-bin-ubuntu-sycl-fp32-x64.tar.gz
 	options = !strip
-	source = core-llama-b12413-bin-ubuntu-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-x64.tar.gz
-	source = backend-vulkan-llama-b12413-bin-ubuntu-vulkan-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-vulkan-x64.tar.gz
-	source = backend-cuda12-llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz
-	source = cudart-cuda12-cudart-llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/cudart-llama-b12413-bin-ubuntu-cuda-12.8-x64.tar.gz
-	source = backend-cuda13-llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz
-	source = cudart-cuda13-cudart-llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/cudart-llama-b12413-bin-ubuntu-cuda-13.5-x64.tar.gz
-	source = backend-rocm-llama-b12413-bin-ubuntu-rocm-10.0-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-rocm-10.0-x64.tar.gz
-	source = backend-openvino-llama-b12413-bin-ubuntu-openvino-2026.4.1-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-openvino-2026.4.1-x64.tar.gz
-	source = backend-sycl-fp16-llama-b12413-bin-ubuntu-sycl-fp16-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-sycl-fp16-x64.tar.gz
-	source = backend-sycl-fp32-llama-b12413-bin-ubuntu-sycl-fp32-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12413/llama-b12413-bin-ubuntu-sycl-fp32-x64.tar.gz
-	sha256sums = 9974ee0a75fd84337e4bcb817050e5c71f96390215fb3231e568d23fc6d06697
-	sha256sums = 7fa95894ab4d53ddb0c05b90c200af47b42884f12566acf7a853dea6d9f16c00
-	sha256sums = 27c77b6100b043826260507f7b669b0196ba88aeedc5b06972342f363023ebc9
-	sha256sums = 7e6ce43d004340ed994e019348ba60c9d6037b604af1c2d176f9b54f73f63240
-	sha256sums = 825bf1435758d97ad7565036cdf54b9a46241ac614df45f77e47f133db77119d
-	sha256sums = 02e4a9717936d09216aebaa8019c75ee2e8b69e98b46447fa85fd6db5bc2dc3f
-	sha256sums = 88405145d782bb7790f7541355d1e5510d9a0b33c3280960ed1d54cfd36711ef
-	sha256sums = 79d24a9f1bb1a0d61fbeb1fb1494db56cc81610752bffb5a42290e38de081e33
-	sha256sums = 81f8ae65bf7ab39dbf7658867adefe1f3feec629d456efe66eaa4698e6368e9d
-	sha256sums = 4da9af9c6dd23ba4de2ab1f972e0fd59828d97bedbb8e95a15fd2bde68553d35
+	source = core-llama-b12426-bin-ubuntu-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-x64.tar.gz
+	source = backend-vulkan-llama-b12426-bin-ubuntu-vulkan-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-vulkan-x64.tar.gz
+	source = backend-cuda12-llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz
+	source = cudart-cuda12-cudart-llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/cudart-llama-b12426-bin-ubuntu-cuda-12.8-x64.tar.gz
+	source = backend-cuda13-llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz
+	source = cudart-cuda13-cudart-llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/cudart-llama-b12426-bin-ubuntu-cuda-13.5-x64.tar.gz
+	source = backend-rocm-llama-b12426-bin-ubuntu-rocm-10.0-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-rocm-10.0-x64.tar.gz
+	source = backend-openvino-llama-b12426-bin-ubuntu-openvino-2026.4.1-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-openvino-2026.4.1-x64.tar.gz
+	source = backend-sycl-fp16-llama-b12426-bin-ubuntu-sycl-fp16-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-sycl-fp16-x64.tar.gz
+	source = backend-sycl-fp32-llama-b12426-bin-ubuntu-sycl-fp32-x64.tar.gz::https://github.com/ggml-org/llama.cpp/releases/download/b12426/llama-b12426-bin-ubuntu-sycl-fp32-x64.tar.gz
+	sha256sums = 011212b7a6052a213034d4c313f99f131cb09fb5fb5a4ee61cd7572b81febf67
+	sha256sums = 20dc955c0c27227efc45971057b2f57600e58bb5997eb1c49271c8c0d76895ab
+	sha256sums = 9da669c3f7f93735db9c67b3e79945774da5b7ffe5506775bf73c8aee4cd1afb
+	sha256sums = 717060033ffb08f137924f1e7eab34df01bc25deb06692225d4e10f91e4c4d55
+	sha256sums = 7706114e14bf411cc013a9371aba45e32e99244d3c904cfcffaebe9527f2b3af
+	sha256sums = 34a84c48d69a39d794a430f896303efa12867ef1566224d11bc4e5c0644863e0
+	sha256sums = f88850c14e58eefedcfd2fc667535cb439bcec42a839398a1d4a2a4dba84af8c
+	sha256sums = 7628bb6ea7ad83e42c0b62e8a523dce40b75c8f182fe6251a019de925db104a9
+	sha256sums = 25762a8fb2950af9d25f3e47c24265d08ab457ed105ea7482f372ac1ae5b5120
+	sha256sums = 6420bc6731a9504fdb2e9703c2ae803626b457d3b8f7747a5cdb4245908ee9b5
 
 pkgname = llama-cpp-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease CPU core and commands
@@ -88,7 +88,7 @@ pkgname = llama-cpp-prerelease-bin
 
 pkgname = llama-cpp-vulkan-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease Vulkan backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = vulkan-driver
 	optdepends = vulkan-intel: Intel GPU acceleration
 	optdepends = vulkan-radeon: AMD GPU acceleration
@@ -102,7 +102,7 @@ pkgname = llama-cpp-vulkan-prerelease-bin
 
 pkgname = llama-cpp-cuda12-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease CUDA 12 backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = nvidia-libgl
 	provides = llama-cpp-cuda12
 	conflicts = llama-cpp-vulkan
@@ -114,7 +114,7 @@ pkgname = llama-cpp-cuda12-prerelease-bin
 
 pkgname = llama-cpp-cuda13-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease CUDA 13 backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = nvidia-libgl
 	provides = llama-cpp-cuda13
 	conflicts = llama-cpp-vulkan
@@ -126,7 +126,7 @@ pkgname = llama-cpp-cuda13-prerelease-bin
 
 pkgname = llama-cpp-rocm-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease ROCm backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = hip-runtime-amd
 	depends = hipblas
 	depends = rocblas
@@ -140,7 +140,7 @@ pkgname = llama-cpp-rocm-prerelease-bin
 
 pkgname = llama-cpp-openvino-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease OpenVINO backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	optdepends = intel-compute-runtime: Intel GPU acceleration
 	provides = llama-cpp-openvino
 	conflicts = llama-cpp-vulkan
@@ -152,7 +152,7 @@ pkgname = llama-cpp-openvino-prerelease-bin
 
 pkgname = llama-cpp-sycl-fp16-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease SYCL FP16 backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = intel-oneapi-compiler-dpcpp-cpp-runtime
 	optdepends = intel-compute-runtime: Intel GPU acceleration
 	provides = llama-cpp-sycl-fp16
@@ -165,7 +165,7 @@ pkgname = llama-cpp-sycl-fp16-prerelease-bin
 
 pkgname = llama-cpp-sycl-fp32-prerelease-bin
 	pkgdesc = Official llama.cpp prerelease SYCL FP32 backend
-	depends = llama-cpp-prerelease-bin=b12413-1
+	depends = llama-cpp-prerelease-bin=b12426-1
 	depends = intel-oneapi-compiler-dpcpp-cpp-runtime
 	optdepends = intel-compute-runtime: Intel GPU acceleration
 	provides = llama-cpp-sycl-fp32
