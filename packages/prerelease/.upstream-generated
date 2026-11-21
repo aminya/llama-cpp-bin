@@ -1,6 +1,6 @@
 channel=prerelease
-package_tag=b12602
-asset_tag=b12602
-pkgver=b12602
+package_tag=b12608
+asset_tag=b12608
+pkgver=b12608
 pkgrel=1
 variants=vulkan,cuda12,cuda13,rocm,openvino,sycl-fp16,sycl-fp32
